@@ -61,7 +61,7 @@ dependencies {
     // 三方依赖
     api 'com.blankj:utilcodex:1.31.0'
 //    api 'com.squareup.retrofit2:retrofit:2.9.0'
-//    api 'com.squareup.okhttp3:logging-interceptor:4.8.1'
+    api 'com.squareup.okhttp3:logging-interceptor:4.8.1'
 //    api 'com.squareup.retrofit2:converter-gson:2.9.0'
     api 'com.github.liujingxing.rxhttp:rxhttp:2.7.0'
     kapt 'com.github.liujingxing.rxhttp:rxhttp-compiler:2.7.0'
