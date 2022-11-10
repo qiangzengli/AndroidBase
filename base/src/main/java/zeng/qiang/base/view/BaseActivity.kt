@@ -1,4 +1,4 @@
-package com.cowain.base.view
+package zeng.qiang.base.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
-import com.cowain.base.utils.DensityUtils
+import zeng.qiang.base.utils.DensityUtils
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.impl.LoadingPopupView
 import java.lang.reflect.ParameterizedType

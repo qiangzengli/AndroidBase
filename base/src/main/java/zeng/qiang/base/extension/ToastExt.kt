@@ -1,4 +1,4 @@
-package com.cowain.base.extension
+package zeng.qiang.base.extension
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

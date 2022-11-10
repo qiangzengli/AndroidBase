@@ -1,4 +1,4 @@
-package com.cowain.base.glide
+package zeng.qiang.base.glide
 
 import android.annotation.SuppressLint
 import android.content.Context

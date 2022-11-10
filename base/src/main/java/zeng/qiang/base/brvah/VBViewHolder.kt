@@ -1,4 +1,4 @@
-package com.cowain.base.brvah
+package zeng.qiang.base.brvah
 
 import android.view.View
 import androidx.viewbinding.ViewBinding

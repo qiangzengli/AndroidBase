@@ -1,4 +1,4 @@
-package com.cowain.base
+package zeng.qiang.base
 
 import android.app.Application
 import com.blankj.utilcode.util.Utils

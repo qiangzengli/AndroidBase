@@ -1,4 +1,4 @@
-package com.cowain.base.entity
+package zeng.qiang.base.entity
 
 /**
  * 响应体基类

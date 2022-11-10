@@ -1,4 +1,4 @@
-package com.cowain.base.contract
+package zeng.qiang.base.contract
 
 import android.app.Activity
 import android.content.Context

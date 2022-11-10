@@ -75,6 +75,3 @@ dependencies {
 //    api 'com.github.getActivity:ShapeView:8.0'
 //    api 'io.github.florent37:shapeofview:1.4.7'
 }
-
-group = "com.cowain.base"
-version = "1.0.0"

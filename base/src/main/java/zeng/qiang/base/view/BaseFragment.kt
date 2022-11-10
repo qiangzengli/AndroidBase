@@ -1,4 +1,4 @@
-package com.cowain.base.view
+package zeng.qiang.base.view
 
 import android.os.Bundle
 import android.view.LayoutInflater

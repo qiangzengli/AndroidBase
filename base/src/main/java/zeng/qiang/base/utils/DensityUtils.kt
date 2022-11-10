@@ -1,4 +1,4 @@
-package com.cowain.base.utils
+package zeng.qiang.base.utils
 
 import android.app.Activity
 import android.app.Application

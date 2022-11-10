@@ -1,4 +1,4 @@
-package com.cowain.base.viewmodel
+package zeng.qiang.base.viewmodel
 
 import androidx.lifecycle.ViewModel
 

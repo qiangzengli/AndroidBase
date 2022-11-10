@@ -1,4 +1,4 @@
-package com.cowain.base.brvah
+package zeng.qiang.base.brvah
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
