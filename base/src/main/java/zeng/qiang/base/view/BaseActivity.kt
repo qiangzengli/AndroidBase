@@ -40,6 +40,7 @@ abstract class BaseActivity<VM : ViewModel, VB : ViewBinding> : AppCompatActivit
         loading = XPopup.Builder(mContext)
             .dismissOnBackPressed(false)
             .dismissOnTouchOutside(false)
+            .isRequestFocus(false)
             .hasStatusBar(false)
             .hasNavigationBar(false)
             .asLoading()
