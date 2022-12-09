@@ -16,7 +16,7 @@ import java.lang.ref.WeakReference
  * App 安装工具类
  */
 
-class InstallAppUtils(private val activity: ComponentActivity, private val apkUrl: String) {
+class InstallAppUtils(private val activity: ComponentActivity, private val apkPath: String) {
     private var activityReference: WeakReference<ComponentActivity> = WeakReference(activity)
     private var launcher: ActivityResultLauncher<Unit?>? = null
 
@@ -40,12 +40,12 @@ class InstallAppUtils(private val activity: ComponentActivity, private val apkUr
         activityReference.get()?.run {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 if (packageManager.canRequestPackageInstalls()) {
-                    installApk(this, apkUrl)
+                    installApk(this, apkPath)
                 } else {
                     startInstallPermissionSettingActivity()
                 }
             } else {
-                installApk(this, apkUrl)
+                installApk(this, apkPath)
             }
         }
 
