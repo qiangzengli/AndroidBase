@@ -4,14 +4,14 @@ import android.content.Context
 import android.os.Build
 
 
+val Context.packageInfo
+    get() = packageManager.getPackageInfo(packageName, 0)
+
 val Context.versionName
-    get() = packageManager.getPackageInfo(packageName, 0).versionName
+    get() = packageInfo.versionName
 
 val Context.versionCode: String
-    get() {
-        val packageInfo = packageManager.getPackageInfo(packageName, 0)
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
-            packageInfo.longVersionCode.toString()
-        else
-            packageInfo.versionName
-    }
+    get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
+        packageInfo.longVersionCode.toString()
+    else
+        packageInfo.versionName
