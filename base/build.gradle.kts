@@ -38,15 +38,14 @@ android {
 
 dependencies {
     api("androidx.core:core-ktx:1.9.0")
-    api("androidx.appcompat:appcompat:1.4.2")
-    api("com.google.android.material:material:1.4.0")
+    api("androidx.appcompat:appcompat:1.5.0")
+    api("com.google.android.material:material:1.7.0")
 
     // Google依赖
-    api("androidx.appcompat:appcompat:1.4.2")
+    api("androidx.appcompat:appcompat:1.5.0")
     api("androidx.activity:activity-ktx:1.6.0")
-    api("com.google.android.material:material:1.4.0")
-    api("androidx.constraintlayout:constraintlayout:2.1.4")
-    api("androidx.databinding:viewbinding:7.2.2")
+    api("com.google.android.material:material:1.7.0")
+    api("androidx.databinding:viewbinding:7.3.1")
     api("androidx.core:core-ktx:1.9.0")
     api("androidx.recyclerview:recyclerview:1.2.1")
     api("androidx.constraintlayout:constraintlayout:2.1.4")
@@ -56,7 +55,7 @@ dependencies {
 //    api  "com.google.protobuf:protobuf-javalite:3.18.0"
 
     // Jetbrains依赖
-    api("org.jetbrains.kotlin:kotlin-reflect:1.7.20")
+    api("org.jetbrains.kotlin:kotlin-reflect:1.7.22")
 //    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1"
 
     // 三方依赖
