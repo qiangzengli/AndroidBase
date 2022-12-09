@@ -20,4 +20,5 @@ inline val Float.sp
         this,
         Resources.getSystem().displayMetrics
     )
-
+val Int.dp get() = this.toFloat().dp
+val Int.sp get() = this.toFloat().sp

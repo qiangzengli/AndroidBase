@@ -1,120 +1,86 @@
-package zeng.qiang.base.widgets.recyclerview.divider;
+package zeng.qiang.base.widgets.recyclerview.divider
 
-import android.graphics.Rect;
-import android.view.View;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import android.graphics.Rect
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView.ItemDecoration
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
 /**
- * 给 GridLayoutManager or StaggeredGridLayoutManager 设置间距，可设置去除首尾间距个数
- *
- * @author jingbin
- * https://github.com/youlookwhat/ByRecyclerView
+ * 给
+ * GridLayoutManager
+ * StaggeredGridLayoutManager
+ * 设置间距
+ * @param space 间距
+ * @param includeEdge 屏幕周围是不是存在间距
  */
-
-public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration {
-
+class GridSpaceItemDecoration @JvmOverloads constructor(
+    private val space: Int,
+    private val includeEdge: Boolean = true
+) : ItemDecoration() {
     /**
      * 每行个数
      */
-    private int mSpanCount;
-    /**
-     * 间距
-     */
-    private int mSpacing;
-    /**
-     * 距屏幕周围是否也有间距
-     */
-    private boolean mIncludeEdge;
+    private var mSpanCount = 0
+
     /**
      * 头部 不显示间距的item个数
      */
-    private int mStartFromSize;
+    private var mStartFromSize = 0
+
     /**
      * 尾部 不显示间距的item个数 默认不处理最后一个item的间距
      */
-    private int mEndFromSize = 1;
+    private var mEndFromSize = 1
+
     /**
      * 瀑布流 头部第一个整行的position
      */
-    private int fullPosition = -1;
+    private var fullPosition = -1
 
-    public GridSpaceItemDecoration(int spacing) {
-        this(spacing, true);
-    }
-
-    /**
-     * @param spacing     item 间距
-     * @param includeEdge item 距屏幕周围是否也有间距
-     */
-    public GridSpaceItemDecoration(int spacing, boolean includeEdge) {
-        this.mSpacing = spacing;
-        this.mIncludeEdge = includeEdge;
-    }
-
-    /**
-     * 已不需要手动设置spanCount
-     */
-    @Deprecated
-    public GridSpaceItemDecoration(int spanCount, int spacing) {
-        this(spanCount, spacing, true);
-    }
-
-    /**
-     * 已不需要手动设置spanCount
-     */
-    @Deprecated
-    public GridSpaceItemDecoration(int spanCount, int spacing, boolean includeEdge) {
-        this.mSpanCount = spanCount;
-        this.mSpacing = spacing;
-        this.mIncludeEdge = includeEdge;
-    }
-
-    @Override
-    public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-        int lastPosition = state.getItemCount() - 1;
-        int position = parent.getChildAdapterPosition(view);
+    override fun getItemOffsets(
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
+        val lastPosition = state.itemCount - 1
+        var position = parent.getChildAdapterPosition(view)
         if (mStartFromSize <= position && position <= lastPosition - mEndFromSize) {
-
             // 行
-            int spanGroupIndex = -1;
+            var spanGroupIndex = -1
             // 列
-            int column = 0;
+            var column = 0
             // 瀑布流是否占满一行
-            boolean fullSpan = false;
-
-            RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
-            if (layoutManager instanceof GridLayoutManager) {
-                GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
-                GridLayoutManager.SpanSizeLookup spanSizeLookup = gridLayoutManager.getSpanSizeLookup();
-                int spanCount = gridLayoutManager.getSpanCount();
+            var fullSpan = false
+            val layoutManager = parent.layoutManager
+            if (layoutManager is GridLayoutManager) {
+                val spanSizeLookup = layoutManager.spanSizeLookup
+                val spanCount = layoutManager.spanCount
                 // 当前position的spanSize
-                int spanSize = spanSizeLookup.getSpanSize(position);
+                val spanSize = spanSizeLookup.getSpanSize(position)
                 // 一行几个
-                mSpanCount = spanCount / spanSize;
+                mSpanCount = spanCount / spanSize
                 // =0 表示是最左边 0 2 4
-                int spanIndex = spanSizeLookup.getSpanIndex(position, spanCount);
+                val spanIndex = spanSizeLookup.getSpanIndex(position, spanCount)
                 // 列
-                column = spanIndex / spanSize;
+                column = spanIndex / spanSize
                 // 行 减去mStartFromSize,得到从0开始的行
-                spanGroupIndex = spanSizeLookup.getSpanGroupIndex(position, spanCount) - mStartFromSize;
-
-            } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+                spanGroupIndex =
+                    spanSizeLookup.getSpanGroupIndex(position, spanCount) - mStartFromSize
+            } else if (layoutManager is StaggeredGridLayoutManager) {
                 // 瀑布流获取列方式不一样
-                StaggeredGridLayoutManager.LayoutParams params = (StaggeredGridLayoutManager.LayoutParams) view.getLayoutParams();
+                val params = view.layoutParams as StaggeredGridLayoutManager.LayoutParams
                 // 列
-                column = params.getSpanIndex();
+                column = params.spanIndex
                 // 是否是全一行
-                fullSpan = params.isFullSpan();
-                mSpanCount = ((StaggeredGridLayoutManager) layoutManager).getSpanCount();
+                fullSpan = params.isFullSpan
+                mSpanCount = layoutManager.spanCount
             }
             // 减掉不设置间距的position,得到从0开始的position
-            position = position - mStartFromSize;
-
-            if (mIncludeEdge) {
+            position -= mStartFromSize
+            if (includeEdge) {
                 /*
                  *示例：
                  * spacing = 10 ；spanCount = 3
@@ -125,34 +91,32 @@ public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration {
                  * ---------10--------
                  */
                 if (fullSpan) {
-                    outRect.left = 0;
-                    outRect.right = 0;
+                    outRect.left = 0
+                    outRect.right = 0
                 } else {
-                    outRect.left = mSpacing - column * mSpacing / mSpanCount;
-                    outRect.right = (column + 1) * mSpacing / mSpanCount;
+                    outRect.left = space - column * space / mSpanCount
+                    outRect.right = (column + 1) * space / mSpanCount
                 }
-
                 if (spanGroupIndex > -1) {
                     // grid 显示规则
                     if (spanGroupIndex < 1 && position < mSpanCount) {
                         // 第一行才有上间距
-                        outRect.top = mSpacing;
+                        outRect.top = space
                     }
                 } else {
                     if (fullPosition == -1 && position < mSpanCount && fullSpan) {
                         // 找到头部第一个整行的position，后面的上间距都不显示
-                        fullPosition = position;
+                        fullPosition = position
                     }
                     // Stagger显示规则 头部没有整行或者头部体验整行但是在之前的position显示上间距
-                    boolean isFirstLineStagger = (fullPosition == -1 || position < fullPosition) && (position < mSpanCount);
+                    val isFirstLineStagger =
+                        (fullPosition == -1 || position < fullPosition) && position < mSpanCount
                     if (isFirstLineStagger) {
                         // 第一行才有上间距
-                        outRect.top = mSpacing;
+                        outRect.top = space
                     }
                 }
-
-                outRect.bottom = mSpacing;
-
+                outRect.bottom = space
             } else {
                 /*
                  *示例：
@@ -164,29 +128,28 @@ public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration {
                  * --------0--------
                  */
                 if (fullSpan) {
-                    outRect.left = 0;
-                    outRect.right = 0;
+                    outRect.left = 0
+                    outRect.right = 0
                 } else {
-                    outRect.left = column * mSpacing / mSpanCount;
-                    outRect.right = mSpacing - (column + 1) * mSpacing / mSpanCount;
+                    outRect.left = column * space / mSpanCount
+                    outRect.right = space - (column + 1) * space / mSpanCount
                 }
-
                 if (spanGroupIndex > -1) {
                     if (spanGroupIndex >= 1) {
                         // 超过第0行都显示上间距
-                        outRect.top = mSpacing;
+                        outRect.top = space
                     }
                 } else {
                     if (fullPosition == -1 && position < mSpanCount && fullSpan) {
                         // 找到头部第一个整行的position
-                        fullPosition = position;
+                        fullPosition = position
                     }
                     // Stagger上间距显示规则
-                    boolean isStaggerShowTop = position >= mSpanCount || (fullSpan && position != 0) || (fullPosition != -1 && position != 0);
-
+                    val isStaggerShowTop =
+                        position >= mSpanCount || fullSpan && position != 0 || fullPosition != -1 && position != 0
                     if (isStaggerShowTop) {
                         // 超过第0行都显示上间距
-                        outRect.top = mSpacing;
+                        outRect.top = space
                     }
                 }
             }
@@ -198,9 +161,9 @@ public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration {
      *
      * @param startFromSize 一般为HeaderView的个数 + 刷新布局(不一定设置)
      */
-    public GridSpaceItemDecoration setStartFrom(int startFromSize) {
-        this.mStartFromSize = startFromSize;
-        return this;
+    fun setStartFrom(startFromSize: Int): GridSpaceItemDecoration {
+        mStartFromSize = startFromSize
+        return this
     }
 
     /**
@@ -208,9 +171,9 @@ public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration {
      *
      * @param endFromSize 一般为FooterView的个数 + 加载更多布局(不一定设置)
      */
-    public GridSpaceItemDecoration setEndFromSize(int endFromSize) {
-        this.mEndFromSize = endFromSize;
-        return this;
+    fun setEndFromSize(endFromSize: Int): GridSpaceItemDecoration {
+        mEndFromSize = endFromSize
+        return this
     }
 
     /**
@@ -219,10 +182,9 @@ public class GridSpaceItemDecoration extends RecyclerView.ItemDecoration {
      * @param startFromSize 一般为HeaderView的个数 + 刷新布局(不一定设置)
      * @param endFromSize   默认为1，一般为FooterView的个数 + 加载更多布局(不一定设置)
      */
-    public GridSpaceItemDecoration setNoShowSpace(int startFromSize, int endFromSize) {
-        this.mStartFromSize = startFromSize;
-        this.mEndFromSize = endFromSize;
-        return this;
+    fun setNoShowSpace(startFromSize: Int, endFromSize: Int): GridSpaceItemDecoration {
+        mStartFromSize = startFromSize
+        mEndFromSize = endFromSize
+        return this
     }
 }
-
