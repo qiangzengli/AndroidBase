@@ -4,19 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
-import zeng.qiang.base.utils.DensityUtils
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.impl.LoadingPopupView
+import zeng.qiang.base.extension.toast
+import zeng.qiang.base.utils.DensityUtils
+import zeng.qiang.base.viewmodel.BaseViewModel
 import java.lang.reflect.ParameterizedType
 
 /**
  * Activity 基类
  */
 @Suppress("UNCHECKED_CAST")
-abstract class BaseActivity<VM : ViewModel, VB : ViewBinding> : AppCompatActivity() {
+abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatActivity() {
     lateinit var mContext: FragmentActivity
     lateinit var vm: VM
     private var vbTemp: VB? = null
@@ -47,6 +48,14 @@ abstract class BaseActivity<VM : ViewModel, VB : ViewBinding> : AppCompatActivit
         setContentView(vb.root)
         initView(savedInstanceState)
         initData()
+        // 监听页面loading弹窗状态
+        vm.loadingState.observe(this) { isShow ->
+            if (isShow) showLoading() else dismissLoading()
+        }
+        // 监听toast状态
+        vm.toastState.observe(this) {
+            toast(it)
+        }
     }
 
     open fun initView(savedInstanceState: Bundle?) {}
@@ -56,7 +65,7 @@ abstract class BaseActivity<VM : ViewModel, VB : ViewBinding> : AppCompatActivit
     }
 
     open fun initData() {}
-    fun showLoading(msg: String = "") = loading?.setTitle(msg)?.show()
+    fun showLoading(msg: String = "加载中...") = loading?.setTitle(msg)?.show()
     fun dismissLoading() = loading?.dismiss()
 
 }
