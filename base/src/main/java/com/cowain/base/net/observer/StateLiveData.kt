@@ -2,7 +2,7 @@ package com.cowain.base.net.observer
 
 import androidx.lifecycle.LifecycleOwner
 import com.kunminx.architecture.domain.message.MutableResult
-import com.cowain.base.entity.BaseResponse
+import com.cowain.base.response.BaseResponse
 
 /**
  * 请求结果回调处理

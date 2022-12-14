@@ -1,7 +1,7 @@
 package com.cowain.base.net.observer
 
 import androidx.lifecycle.Observer
-import com.cowain.base.entity.*
+import com.cowain.base.response.*
 
 abstract class IStateObserver<T> : Observer<BaseResponse<T>> {
 

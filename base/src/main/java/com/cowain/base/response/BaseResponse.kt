@@ -1,4 +1,4 @@
-package com.cowain.base.entity
+package com.cowain.base.response
 
 /**
  * 响应体基类

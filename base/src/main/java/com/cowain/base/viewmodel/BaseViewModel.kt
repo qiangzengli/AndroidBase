@@ -5,7 +5,7 @@ import com.google.gson.JsonSyntaxException
 import com.kunminx.architecture.domain.message.MutableResult
 import kotlinx.coroutines.TimeoutCancellationException
 import retrofit2.HttpException
-import com.cowain.base.entity.*
+import com.cowain.base.response.*
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
