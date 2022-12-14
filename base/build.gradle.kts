@@ -2,16 +2,15 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    // 将library 发布到maven仓库
+    id("maven-publish")
 }
 
 android {
     compileSdk = 33
-
     defaultConfig {
         minSdk = 21
         targetSdk = 28
-//        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-//        consumerProguardFiles = "consumer-rules.pro"
     }
 
     buildTypes {
@@ -38,7 +37,7 @@ dependencies {
     // Google依赖
     api("androidx.core:core-ktx:1.9.0")
     api("com.google.android.material:material:1.7.0")
-    api("androidx.appcompat:appcompat:1.5.0")
+    api("androidx.appcompat:appcompat:1.5.1")
     api("androidx.activity:activity-ktx:1.6.0")
     api("com.google.android.material:material:1.7.0")
     api("androidx.databinding:viewbinding:7.3.1")
@@ -68,3 +67,53 @@ dependencies {
     // 解决livedata数据倒灌问题
     api("com.kunminx.arch:unpeek-livedata:7.8.0")
 }
+
+sourceSets {
+    create("main") {
+        java.srcDir("src/main/java")
+    }
+}
+// 打包源码
+val sourcesJar by tasks.registering(Jar::class) {
+    from(sourceSets["main"].allSource)
+//    from(android.sourceSets["main"].java.srcDirs)
+    archiveClassifier.set("sources")
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+
+}
+
+publishing {
+    // 配置发布产物
+    publications {
+        create<MavenPublication>("maven") {
+            artifact(sourcesJar)
+            afterEvaluate { artifact(tasks.getByName("bundleReleaseAar")) }
+            groupId = "com.cowain"
+            artifactId = "base"
+            version = "1.0.0"
+
+        }
+    }
+    // 配置maven仓库
+    repositories {
+        // 本项目地址
+        maven {
+            url = uri("$rootDir/repo")
+        }
+        // 远程私有仓库
+//        maven {
+//            // 设置maven仓库地址
+//            setUrl("http://192.168.188.26:9000/lizengqiang/AndroidBase")
+//            //允许非https链接
+//            isAllowInsecureProtocol = true
+//            credentials {
+//                username = "lizengqiang"
+//                password = "12345678"
+//            }
+//
+//        }
+    }
+}
+
+
+
