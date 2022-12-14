@@ -90,16 +90,37 @@ publishing {
             afterEvaluate { artifact(tasks.getByName("bundleReleaseAar")) }
             groupId = "com.cowain"
             artifactId = "base"
-            version = "1.0.0"
+            version = "0.0.1"
+            /**
+             * 转换为如下格式
+             * <dependencies>
+             *   <dependency>
+             *       <groupId></groupId>
+             *       <artifactId></artifactId>
+             *       <version></version>
+             *   </dependency>
+             * </dependencies>
+             */
+            pom.withXml {
+                val nodes = asNode().appendNode("dependencies")
+                configurations.api.get().allDependencies.forEach {
+                    val node = nodes.appendNode("dependency")
+                    node.appendNode("groupId", it.group)
+                    node.appendNode("artifactId", it.name)
+                    node.appendNode("version", it.version)
+                }
+            }
 
         }
     }
     // 配置maven仓库
     repositories {
-        // 本项目地址
-        maven {
-            url = uri("$rootDir/repo")
-        }
+        // 本项目repo地址
+//        maven {
+//            url = uri("$rootDir/repo")
+//        }
+        // 本地仓库地址
+        mavenLocal()
         // 远程私有仓库
 //        maven {
 //            // 设置maven仓库地址
