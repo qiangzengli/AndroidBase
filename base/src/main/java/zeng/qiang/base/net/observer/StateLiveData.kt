@@ -4,7 +4,9 @@ import androidx.lifecycle.LifecycleOwner
 import com.kunminx.architecture.domain.message.MutableResult
 import zeng.qiang.base.entity.BaseResponse
 
-
+/**
+ * 请求结果回调处理
+ * */
 class StateLiveData<T> : MutableResult<BaseResponse<T>>() {
 
     fun observeState(owner: LifecycleOwner, listenerBuilder: ListenerBuilder.() -> Unit) {

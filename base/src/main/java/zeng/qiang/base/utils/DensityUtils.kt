@@ -10,7 +10,7 @@ import com.blankj.utilcode.util.ScreenUtils
  * @Author lizengqiang
  * @Date 2019/11/16
  * @Time 16:12
- * @Description
+ * @Description  今日头条修改density原理屏幕适配方案
  */
 object DensityUtils {
     private const val WIDTH = 540f //参考设备的宽

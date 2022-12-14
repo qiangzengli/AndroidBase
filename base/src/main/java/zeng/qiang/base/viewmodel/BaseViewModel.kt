@@ -41,9 +41,9 @@ open class BaseViewModel : ViewModel() {
                 loadingState.value = false
             }
             toastState.value = e.msg
-            return ApiErrorResponse(e)
+            return ErrorResponse(e)
         }
-        return ApiEmptyResponse()
+        return EmptyResponse()
     }
 
     /**
@@ -54,7 +54,7 @@ open class BaseViewModel : ViewModel() {
             getHttpSuccessResponse(data)
         } else {
             toastState.value = data.msg
-            ApiFailedResponse(data.code!!, data.msg!!)
+            FailedResponse(data.code!!, data.msg!!)
         }
     }
 
@@ -64,9 +64,9 @@ open class BaseViewModel : ViewModel() {
     private fun <T> getHttpSuccessResponse(response: BaseResponse<T>): BaseResponse<T> {
         val data = response.data
         return if (data == null || data is List<*> && (data as List<*>).isEmpty()) {
-            ApiEmptyResponse()
+            EmptyResponse()
         } else {
-            ApiSuccessResponse(data)
+            SuccessResponse(data)
         }
     }
 
