@@ -13,8 +13,8 @@ import com.blankj.utilcode.util.ScreenUtils
  * @Description
  */
 object DensityUtils {
-    private const val WIDTH = 750f //参考设备的宽
-    private const val HEIGHT = 1333f
+    private const val WIDTH = 540f //参考设备的宽
+    private const val HEIGHT = 960f
     private var appDensity = 0f //表示屏幕宽度 = 0f
     private var appScaleDensity = 0f //字体缩放比例 默认等于appDensity = 0f
 
@@ -45,7 +45,6 @@ object DensityUtils {
             90, 270 -> displayMetrics.widthPixels / HEIGHT
             else -> displayMetrics.widthPixels / WIDTH
         }
-
         val targetScaleDensity =
             targetDensity * (appScaleDensity / appDensity)
         val targetDensityDpi = (targetDensity * 160).toInt()

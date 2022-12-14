@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="zeng.qiang.base">
+<manifest
+        package="zeng.qiang.base"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
+            android:networkSecurityConfig="@xml/net_security_config"/>
 
 </manifest>

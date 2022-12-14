@@ -16,12 +16,12 @@ open class BaseResponse<T>(
     val isSucceed get() = code == "0"
 }
 
-data class ApiSuccessResponse<T>(override val data: T) : BaseResponse<T>()
+data class SuccessResponse<T>(override val data: T) : BaseResponse<T>()
 
-class ApiEmptyResponse<T> : BaseResponse<T>()
+class EmptyResponse<T> : BaseResponse<T>()
 
-data class ApiFailedResponse<T>(override val code: String, override val msg: String) :
+data class FailedResponse<T>(override val code: String, override val msg: String) :
     BaseResponse<T>()
 
-data class ApiErrorResponse<T>(override val throwable: Throwable) :
+data class ErrorResponse<T>(override val throwable: Throwable) :
     BaseResponse<T>()

@@ -7,10 +7,10 @@ abstract class IStateObserver<T> : Observer<BaseResponse<T>> {
 
     override fun onChanged(response: BaseResponse<T>) {
         when (response) {
-            is ApiSuccessResponse -> onSuccess(response.data)
-            is ApiEmptyResponse -> onDataEmpty()
-            is ApiFailedResponse -> onFailed(response.code, response.msg)
-            is ApiErrorResponse -> onError(response.throwable)
+            is SuccessResponse -> onSuccess(response.data)
+            is EmptyResponse -> onDataEmpty()
+            is FailedResponse -> onFailed(response.code, response.msg)
+            is ErrorResponse -> onError(response.throwable)
         }
         onComplete()
     }

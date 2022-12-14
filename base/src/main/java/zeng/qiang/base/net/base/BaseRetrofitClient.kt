@@ -1,6 +1,5 @@
 package zeng.qiang.base.net.base
 
-import androidx.viewbinding.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -20,15 +19,10 @@ abstract class BaseRetrofitClient {
         builder.build()
     }
 
-    private fun getHttpLoggingInterceptor(): HttpLoggingInterceptor {
-        val logging = HttpLoggingInterceptor()
-        if (BuildConfig.DEBUG) {
-            logging.level = HttpLoggingInterceptor.Level.BODY
-        } else {
-            logging.level = HttpLoggingInterceptor.Level.BODY
-        }
-        return logging
+    private fun getHttpLoggingInterceptor() = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
     }
+
 
     abstract fun handleBuilder(builder: OkHttpClient.Builder)
 

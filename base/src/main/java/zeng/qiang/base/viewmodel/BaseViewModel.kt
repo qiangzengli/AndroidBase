@@ -74,19 +74,17 @@ open class BaseViewModel : ViewModel() {
 
 val Throwable.msg: String
     get() = when (this) {
-        is UnknownHostException -> "当前无网络，请检查你的网络设置"
+        is UnknownHostException -> "当前无网络"
         is SocketTimeoutException,
         is TimeoutException,
-        is TimeoutCancellationException -> "连接超时,请稍后再试"
+        is TimeoutCancellationException -> "连接超时"
         // 网络异常
-        is ConnectException -> "网络不给力，请稍候重试！"
+        is ConnectException -> "连接异常"
         // 请求失败
         is HttpException -> code().httpErrorMsg
         //请求成功，但Json语法异常,导致解析失败
-        is JsonSyntaxException -> "数据解析失败,请检查数据是否正确"
-        // ParseException异常表明请求成功，但是数据不正确
-//        is ParseException -> this.message ?: errorCode   //msg为空，显示code
-        else -> "请求失败，请稍后再试"
+        is JsonSyntaxException -> "数据解析失败"
+        else -> "请求失败"
     }
 
 val Int.httpErrorMsg: String
